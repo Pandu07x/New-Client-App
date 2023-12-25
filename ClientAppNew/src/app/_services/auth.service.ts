@@ -10,7 +10,7 @@ export class AuthService {
   user:User;
   accessToken;
   // private apiUrl = 'http://localhost:3000/api';
-  private apiUrl = 'http://52.2.20.53:3000/api';
+  private apiUrl = 'http://52.21.7.196:3000/api';
   constructor(private http: HttpClient) {
 
     if(sessionStorage.getItem('userInfo'))

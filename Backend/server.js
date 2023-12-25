@@ -12,6 +12,6 @@ app.use(bodyParser.json());
 
 app.use('/api', userRoutes);
 
-app.listen(port, () => {
+app.listen(port,"192.168.4.203", () => {
   console.log(`Server is running on port ${port}`);
 });
