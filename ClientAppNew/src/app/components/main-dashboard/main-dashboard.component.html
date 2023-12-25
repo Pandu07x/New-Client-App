@@ -1,0 +1,463 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<div class="dashboard p-3 pt-0 h-100" *ngIf="showDashBoard">
+    <!-- <hr /> -->
+    <div class="row" style="height: fit-content;">
+        <div class="col-12 p-0">
+            <div class="p-1 h-100">
+                <div class="row d-flex p-0 mx-3 text-center border-bottom" style="background-color: #1d3b55;border-radius: 10px;">
+                    <div
+                        class="col-12 mt-3 align-items-center col-sm-12  col-md-4 col-lg-4 col-xl-4 text-center order-2  order-sm-1 order-md-2 order-lg-2 order-xl-2  gap-2 align-items-center ">
+                        <p class="d-flex  text-sm-center text-center text-md-start text-lg-start text-xl-start text-white connection-status">
+                            <b>Connection Status :</b> <span class="text-success ms-1"
+                                [ngClass]="dashData.Status == true ? 'greenDot':'redDot'">
+                            </span>
+                        </p>
+                    </div>
+                    <div
+                        class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 order-sm-1 order-1 order-md-2 order-lg-2 order-xl-2  col- text-center">
+                        <h4 class="dashHeader text-white mt-3" style="font-weight: 700;font-size: 25px;">Lab Safety Measurements</h4>
+                    </div>
+                </div>
+                    <!-- <div class="col-12 mb-3  col-sm-12 col-md-3 col-lg-3 col-xl-3 " *ngIf="showCharts">
+                        <div class="card overflow-hidden testBenchCard">
+                            <div class="card__header">
+
+                                <h3 class="card__title text-white">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Temperature
+                                            <p class="card__subline">
+
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h1 class="text-right text-white"> {{dashData.LabTemp | number:'1.1-1'}} &deg;C</h1>
+                                        </div>
+                                    </div>
+
+                                </h3>
+                                <p class="card__subline">
+
+                                </p>
+                            </div>
+                            <div class="card__content  text-end ">
+                                <fusioncharts [width]="'100%'" [height]="'100'" type="splinearea"
+                                    [dataFormat]="dataFormat" [dataSource]="dataSourceTemperature">
+                                </fusioncharts>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-12 mb-3  col-sm-12 col-md-3 col-lg-3 col-xl-3 " *ngIf="showCharts">
+                        <div class="card overflow-hidden testBenchCard">
+                            <div class="card__header">
+
+                                <h3 class="card__title">
+                                    <div class="d-flex justify-content-between text-white">
+                                        <div>
+                                            Humidity
+                                            <p class="card__subline">
+
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h1 class="text-right text-white">{{dashData.LabHumidity | number:'1.1-1'}} RH</h1>
+                                        </div>
+                                    </div>
+
+                                </h3>
+
+                            </div>
+                            <fusioncharts width="100%" [height]="'100'" type="splinearea" [dataFormat]="dataFormat"
+                                [dataSource]="dataSourceHumidity">
+                            </fusioncharts>
+                            <div class="card__content   text-end ">
+                            </div>
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+    </div>
+
+        <div class="row no-gutters" >
+            <div class="col-md-8">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
+                        <div class="cell">
+                            <div class="col-12 col-md-12 ">
+                                <div
+                                    class="card overflow-hidden testBenchCard h-100  border-bottom ">
+                                    <div class="card__header p-2 mt-1">
+
+                                        <h3 class="card__title text-white">
+                                            <div class="d-flex justify-content-between">
+                                                <div style="border-radius: 10px;"
+                                                    class="ps-3 text-white  w-100 "
+                                                    [ngClass]="(dashData.LabEmergency == true && dashData.MPEmergencyShutdownPB == true && dashData.LabTemp <= 40 && dashData.LabHumidity <= 75 && dashData.LabAirQualityVOC <= 7.99 && dashData.LabAirQualitySPM <= 12 ) ?'bg-success':' bg-danger'">
+                                                    Lab Status
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div
+                                        class="card__content d-flex flex-column h-100 justify-content-around p-2 text-center ">
+                                        <div
+                                            class="d-flex align-items-center justify-content-between text-white">
+                                            <h5>Environment</h5>
+                                            <h5 *ngIf="(dashData.LabTemp <= 40 && dashData.LabHumidity <= 75 && dashData.LabAirQualityVOC <= 7.99 && dashData.LabAirQualitySPM <= 12)"
+                                                class="text-success" style="font-weight: 800;">Normal
+                                            </h5>
+                                            <h4 *ngIf="!(dashData.LabTemp <= 40 && dashData.LabHumidity <= 75 && dashData.LabAirQualityVOC <= 7.99 && dashData.LabAirQualitySPM <= 12)"
+                                                class="text-danger" style="font-weight: 800;">Abnormal
+                                            </h4>
+                                        </div>
+                                        <div
+                                            class="d-flex align-items-center justify-content-between text-white">
+                                            <h5>Lab Emergency</h5>
+                                            <h5 class="text-success "
+                                                [ngClass]="labEmenrgency == 'true' ?'greenDot':'redDot'">
+                                            </h5>
+                                        </div>
+                                        <div
+                                            class="d-flex align-items-center justify-content-between text-white">
+                                            <h5>Panel Emergency</h5>
+                                            <h5 class="text-success "
+                                                [ngClass]="panelEmergency == 'true' ?'greenDot':'redDot'">
+                                            </h5>
+                                        </div>
+                                        <!-- <fusioncharts [width]="'100%'" [height]="'100'" type="splinearea" [dataFormat]="dataFormat"
+                    [dataSource]="dataSourceAir">
+                </fusioncharts> -->
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cell">
+                            <div class="col-12">
+                                <div
+                                    class="card overflow-hidden testBenchCard  h-100 border-bottom ">
+                                    <div class="card__header ps-2 p-0 mt-1">
+                                        <div class="card__title text-white">
+                                            Test Bench Status
+                                        </div>
+                                    </div>
+                                    <div
+                                        class=" w-100 align-items-center h-100 justify-content-around mt-3 mb-3 p-3  d-flex text-white">
+                                        <div>
+                                            <h3 class="heading-text  text-white"><span
+                                                    class="greenDot"></span> Running</h3>
+                                            <h1 class="counts text-center text-white">
+                                                {{testBenchStatus?.Running}}
+                                                
+                                            </h1>
+                                        </div>
+                                        <div>
+                                            <h3 class="heading-text text-white"><span
+                                                    class="grayDot"></span> Available</h3>
+                                            <h1 class="counts text-center text-white">
+                                                {{testBenchStatus?.Available}}
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="col-md-6">
+                        <div class="cell">
+                            <div class="col-12">
+                                <div class="card testBenchCard overflow-hidden p-1 ps-3 pe-1 Last5TestCard" >
+                                    <div class="card__header p-0">
+                                        <div class="card__title text-white">
+                                            Test Bench Details (Last 5 Run)
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2 pb-2">
+                                        <div class="eodd mb-1 row" *ngFor="let item of testStatus">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3" >
+                                                <div class="text-white" style="font-weight: 500;" maxlength="2">
+                                                    {{item.ProjectName == '' ? "-" : item.ProjectName | slice:0:15}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
+                                                <div class="text-white">
+                                                    {{item.TestBench}}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+                                                <div class="text-white">
+                                                    {{item.StartDateTime | date:'dd/MM/yyyy hh:mm:ss'}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cell">
+                            <div class="col-12 mb-2">
+                                <div class="card overflow-hidden testBenchCard p-1 border-bottom h-100" 
+                                   >
+                                    <div class="card__header ps-2 p-0 ">
+                                        <div class="card__title text-white">
+                                            Test Object Count
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-100 align-items-center h-100 justify-content-around mt-4 mb-3  d-flex text-white p-1">
+                                        <div class="">
+                                            <h4>This Week</h4>
+                                            <h1 class="count text-white text-center">
+                                                {{objCount.totalWeeklyObjCount}}
+                                            </h1>
+                                        </div>
+                                        <div class="">
+                                            <h4>This Month</h4>
+                                            <h1 class="count text-white text-center">
+                                                {{objCount.totalMonthlyObjCount}}
+                                            </h1>
+                                        </div>
+                                        <div class="">
+                                            <h4>This Year</h4>
+                                            <h1 class="count text-white text-center">
+                                                {{objCount.totalYearlyObjCount}}
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cell cell__big">
+                    <div class="col-12">
+                        <div class="card overflow-hidden testBenchCard border-bottom p-3" 
+                            style="height: 370px">
+                            <div class="card__header justify-content-between" >
+                                <div class="card__title text-white mb-lg-4">
+                                    <div class="d-flex align-items-top  justify-content-between">
+                                        <div>
+                                            <div (click)="openAirQualityDialog()" class="d-flex mt-1">
+                                                <h2 class="">Air Quality</h2><img class="apply-filter" src="../../../assets/images/images/dashboard/airQua (2).png" height="30px"
+                                                    width="30px" alt=""  style="margin-left: 10px;">                                               
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-right display-inline align-items-end gap-1  m-0 text-white"
+                                                style="font-weight: 700;">
+                                                <div
+                                                    style="font-size: medium;color: #fff; display: inline;">
+                                                    SPM: </div>
+                                                {{dashData?.LabAirQualitySPM | number:'1.1-1' }} µg/m3
+                                                <!-- 03 µg/m3 -->
+                                            </h4>
+                                            <h4 class="text-right  align-items-end gap-1 text-white"
+                                                style="font-weight: 700; ">
+                                                <div
+                                                    style="font-size: medium;color: #fff; display: inline;">
+                                                    VOC:</div>
+                                                {{dashData?.LabAirQualityVOC | number:'1.1-1' }} % 
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <mat-divider></mat-divider>
+                                <div class="card__title text-white mb-lg-5">
+                                    <div class="d-flex justify-content-between">
+                                        <div (click)="openTempratureDialog()" class="d-flex mt-1">
+                                            <h2 class="">Temprature</h2><img class="apply-filter" src="../../../assets/images/images//dashboard/Temp.png" height="35px"
+                                                width="35px" alt="">                                                          
+                                        </div>
+                                        <div>
+                                            <h4 class="text-right text-white mt-2"> {{dashData.LabTemp |
+                                                number:'1.1-1'}} &deg;C</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div class="card__title">
+                                    <div class="d-flex justify-content-between text-white">
+                                        <div (click)="openHumidityDialog()" class="d-flex mt-1">
+                                            <h2 class="">Humidity</h2>  
+                                            <img class="apply-filter mx-lg-4 mt-1" src="../../../assets/images/images//dashboard/humiditi.png" height="30px"
+                                                width="30px" alt="">
+                                        </div>
+                                        <div>
+                                            <h4 class="text-right text-white mt-2">{{dashData.LabHumidity |
+                                                number:'1.1-1'}} RH</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card pb-1 testBenchCard overflow-hidden p-2">
+                <div class="card__header">
+                    <div class="card__title text-white">
+                        Tank Status
+                    </div>
+                </div>
+                <div class="row p-3 pt-0 " *ngIf="showCharts">
+                    <div
+                        class="col-12 mb-sm-3 mb-md-2 mb-lg-2 mb-xl-2 mb-5 col-sm-12 col-md-2 col-lg-2 col-xl-2 pe-0 pt-0 pb-0">
+                        <div class="position-relative ">
+                            <fusioncharts [width]="width" [height]="height" [type]="'angulargauge'"
+                                [dataFormat]="dataFormat" [dataSource]="dataSource">
+                            </fusioncharts>
+                            <div class="p-0 mt-2 bg-success m-0  statuspara   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">SERVICE</p>
+                            </div>
+                            <div class="p-0  m-0  statusparaTemp  position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">
+                               {{dashData.WaterTankTemp | number:'1.1-1'}}  &deg; C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-sm-3 mb-md-2 mb-lg-2 mb-xl-2 mb-5 col-sm-12 col-md-2 col-lg-2 col-xl-2 p-0">
+                        <div class="position-relative">
+                            <fusioncharts [width]="width" [height]="height" [type]="'angulargauge'"
+                                [dataFormat]="dataFormat" [dataSource]="dataSourceOilTank1">
+                            </fusioncharts>
+                            <div class="p-0  bg-warning m-0  statuspara   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">OUT OF USE</p>
+                            </div>
+                            <div class="p-0  m-0  statusparaTemp   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">{{dashData.OilTank1Temp | number:'1.1-1'}} &deg; C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-sm-3 mb-md-2 mb-lg-2 mb-xl-2 mb-5 col-sm-12 col-md-2 col-lg-2 col-xl-2 p-0">
+                        <div class="position-relative">
+                            <fusioncharts *ngIf="dataSourceOilTank2" [width]="width" [height]="height"
+                                [type]="'angulargauge'" [dataFormat]="dataFormat" [dataSource]="dataSourceOilTank2">
+                            </fusioncharts>
+                            <div class="p-0  bg-warning m-0  statuspara   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">OUT OF USE</p>
+                            </div>
+                            <div class="p-0  m-0  statusparaTemp   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">{{dashData.OilTank2Temp | number:'1.1-1'}} &deg; C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-sm-3 mb-md-2 mb-lg-2 mb-xl-2 mb-5 col-sm-12 col-md-2 col-lg-2 col-xl-2 p-0">
+                        <div class="position-relative">
+                            <fusioncharts [width]="width" [height]="height" [type]="'angulargauge'"
+                                [dataFormat]="dataFormat" [dataSource]="dataSourceOilTank3">
+                            </fusioncharts>
+                            <div class="p-0  bg-warning m-0  statuspara   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">OUT OF USE</p>
+                            </div>
+                            <div class="p-0  m-0  statusparaTemp   position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">{{dashData.OilTank3Temp | number:'1.1-1'}} &deg; C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-sm-3 mb-md-2 mb-lg-2 mb-xl-2 mb-5 col-sm-12 col-md-2 col-lg-2 col-xl-2 p-0">
+                        <div class="position-relative">
+                            <fusioncharts [width]="width" [height]="height" [type]="'angulargauge'"
+                                [dataFormat]="dataFormat" [dataSource]="dataSourceOilTank4">
+                            </fusioncharts>
+                            <div class="p-0  bg-warning m-0  statuspara  position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">OUT OF USE</p>
+                            </div>
+                            <div class="p-0  m-0  statusparaTemp  position-absolute  text-center">
+                                <p class="m-0 p-0 text-light">{{dashData.OilTank4Temp | number:'1.1-1'}} &deg; C</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+
+    <div class="row">
+     <div class="col"  *ngFor="let item of testBenchList;let i = index">
+            <div class="container p-1">
+
+            <div class="card testBenchCard testCard overflow-hidden mt-2">
+                <div class="card-body">
+                    <div class="card-title text-center p-1 rounded text-white"
+                        [ngClass]="{'bg_true': testBenchStatus2[i].Status == 'Running', 'bg_false': testBenchStatus2[i].Status != 'Running' }"
+                        [routerLink]="['/home/testbenchdashboard', testBenchStatus2[i].Group, i + 1]">
+                 <b>{{item}}</b>
+                        <!-- <span *ngIf="testBenchStatus2[i].ProjectType && testBenchStatus2[i].Status">
+                           ({{testBenchStatus2[i].ProjectType}})
+                        </span> -->
+                    </div>
+                   
+                    <div class="row align-items-start overflow-hidden">
+                        <span class="col-6 text-white bg-gradient d-md-block">
+                            <b>Project Number</b>
+                        </span>
+                        <div class="col-6 text-white border-bottom border-secondary" style="padding: 6px;">
+                            <span class="text-truncate" *ngIf="testBenchStatus2[i].ProjectNo && testBenchStatus2[i].Status">
+                               {{testBenchStatus2[i].ProjectNo}}
+                            </span>
+                            <span *ngIf="!testBenchStatus2[i].ProjectNo || !testBenchStatus2[i].Status">
+                               (NA) 
+                            </span>
+                        </div>
+        
+                        <span class="col-6 text-white bg-gradient d-md-block">
+                           <b> Project Name</b>
+                        </span>
+                        <div class="col-6 text-white border-bottom border-secondary" style="padding: 6px;">
+                            <span class="text-truncate" *ngIf="testBenchStatus2[i].ProjectName && testBenchStatus2[i].Status">
+                                {{testBenchStatus2[i].ProjectName}}
+                            </span>
+                            <span *ngIf="!testBenchStatus2[i].ProjectName || !testBenchStatus2[i].Status">
+                                (NA) 
+                            </span>
+                        </div>
+        
+                        <span class="col-6 text-white bg-gradient d-md-block">
+                            <b>Test Run Count</b>
+                        </span>
+                        <div class="col-6 text-white border-bottom border-secondary" style="padding: 6px;">
+                            <span class="text-truncate" *ngIf="testBenchStatus2[i].TestRunCount && testBenchStatus2[i].Status">
+                                {{testBenchStatus2[i].TestRunCount}}
+                            </span>
+                            <span *ngIf="!testBenchStatus2[i].TestRunCount || !testBenchStatus2[i].Status">
+                                (NA) 
+                            </span>
+                        </div>
+        
+                        <span class="col-6 text-white bg-gradient d-md-block">
+                          <b>Project Type</b>
+                        </span>
+                        <div class="col-6 text-white border-bottom border-secondary" style="padding: 8px;">
+                            <span class="text-truncate" *ngIf="testBenchStatus2[i].ProjectType&& testBenchStatus2[i].Status">
+                                {{testBenchStatus2[i].ProjectType}}
+                            </span>
+                            <span *ngIf="!testBenchStatus2[i].ProjectType || !testBenchStatus2[i].Status">
+                                (NA) 
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+  
+    </div>
+            
+        <div class="w-100 cards__row">
+
+        </div>
