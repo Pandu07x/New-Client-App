@@ -6,11 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TestBenchService {
-<<<<<<< HEAD
-  private apiUrl = 'http://ec2-52-21-7-196.compute-1.amazonaws.com/api';
-=======
-  private apiUrl = 'http://ec2-52-21-7-196.compute-1.amazonaws.com:3000/api';
->>>>>>> 942a5ebfb614ebb8b3369649a1937f164ac53e21
+  private apiUrl = 'http://52.21.7.196:3000/api';
 
   constructor(private http:HttpClient) { }
 
