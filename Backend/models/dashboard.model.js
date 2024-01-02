@@ -5,6 +5,7 @@ const getMainDashboardData = async () => {
     try {
       const query = 'SELECT * FROM "MasterPanel" order By "DateTime" DESC limit 10;'
       const results = await db.query(query);
+      
       return results
     } catch (err) {
       console.error(err);
@@ -88,7 +89,8 @@ const getMainDashboardData = async () => {
   }
   // Get Project Details by Id
   const getProjectDetials=async(projectid)=>{
-    const query=`Select * from "ProjectMaster" where "ProjectId"=${projectid}`
+    const query=`select tbr."Status",pm."ProjectName",pm."ProjectNo",pm."ProjectType",pm."ProjectId",tbr."TestRunCount",pm."ProjectOwner",tbr."TestBenchId" from "TestBenchCurrentStatus" tbr
+    join "ProjectMaster" pm on tbr."ProjectId"=pm."ProjectId" Where tbr."TestBenchId"=${projectid}`
     const result= await db.query(query)
     return result.rows
 

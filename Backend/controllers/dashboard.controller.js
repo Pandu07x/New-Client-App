@@ -9,6 +9,18 @@ const getMainDashboardData = async (req, res) => {
       
       
       if (dashData) {
+        // dashData.rows[0].OilTank2Temp=13
+        // dashData.rows[0].OilTank1Temp=15
+        // dashData.rows[0].OilTank3Temp=75
+        // dashData.rows[0].WaterTankTemp=50
+        // dashData.rows[0].OilTank4Temp=80
+        // dashData.rows[0].LabTemp=5
+        // dashData.rows[0].MPEmergencyShutdownPB=true
+        // dashData.rows[0].LabEmergency=true
+
+        // console.log(dashData.rows)
+       
+
         res.json({ success: true, message: 'MasterPanel data retrieved successfully', dashData });
       } else {
         res.json({ success: false, message: 'No table data found' });
@@ -30,6 +42,8 @@ const getMainDashboardData = async (req, res) => {
     const data= await dashboardModel.getChartData(start,end)
     
     if(data){
+
+      
       
       res.send(data)
     }
@@ -131,35 +145,33 @@ const getMainDashboardData = async (req, res) => {
   // Get Project Details by id for 2 dashboard 
   const getProjectDetails=async(req,res)=>{
     const id=req.body.id
+    //const id=req.session.name
+    //const id=req.params.id
+    console.log(id)
+    
     try{
       const data=await dashboardModel.getProjectDetials(id)
       if(data){
+        console.log(data,id)
         res.send(data)
       }
       else{
+        console.log("error found")
         res.send("No data Found")
       }
     }
     catch(err){
+      console.log(err)
       res.send(err)
     }
   }
   const test=async(req,res)=>{
-   
-      const id=req.body.id
-    const data=await dashboardModel.getTestBenchDetails(id)
-    if(data){
-      res.send(data)
-    }
-    else{
-      res.send("Data not Found")
-    }
-    
-   
-     
-    
-    
+    var body=req.body.id
+    req.session.name=body
+    console.log(req.session)
+    res.send("Helloe rold") 
   }
+  
 
   
   module.exports = { getMainDashboardData, getPlcStatusData,getTestBenchStatusCount,Last5BechData,GetTestObjectCount,TestbenchDetails,getProjectDetails,test,getChartData };

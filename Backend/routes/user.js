@@ -25,7 +25,7 @@ router.get("/testBenchCount",dashboardController.getTestBenchStatusCount)
 router.get("/getLast5Bench",dashboardController.Last5BechData)
 router.get("/getObjectCount",dashboardController.GetTestObjectCount)
 router.get("/testBenchDetails",dashboardController.TestbenchDetails)
-router.post("/getProjectDetails",dashboardController.getProjectDetails)
+router.post("/getProjectDetails/",dashboardController.getProjectDetails)
 router.post("/test",dashboardController.test)
 router.post("/getChartData",dashboardController.getChartData)
 
